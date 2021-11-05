@@ -20,7 +20,7 @@ function yielder() {
 
 function* quote(string) {
   let result = JSON.stringify(string);
-  yield;
+  if(yielder()) yield;
   return result
 }
 
@@ -81,7 +81,7 @@ function* str(key, holder, ctrl) {
 
       // Undefined values should be dropped (with their keys) from the stringified result
       if(typeof(value)==="undefined") return undefined;
-      
+
       if (!value) {
         return "null";
       }
