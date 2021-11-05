@@ -4,10 +4,6 @@
 //  NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
 //  https://github.com/douglascrockford/JSON-js
 
-//eslint-disable-next-line no-control-regex
-var rx_escapable = /[\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-//eslint-disable-next-line no-control-regex
-var rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
 
 var gap;
 var indent;
@@ -24,23 +20,9 @@ function yielder() {
 }
 
 function* quote(string) {
-  let result = ['"'];
-  for (let i = 0, l = string.length; i < l; i++) {
-    if ((i & 7) === 0 && yielder()) yield;
-    let c = string[i];
-    if (c === '"' || rx_escapable.test(c)) {
-      const r = meta[c];
-      if (typeof r === "string") {
-        result.push(r)
-      } else {
-        result.push( "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4));
-      }
-    } else if (!rx_dangerous.test(c)) {
-      result.push(c);
-    }
-  }
-  result.push('"')
-  return result.join('')
+  let result = JSON.stringify(string);
+  yield;
+  return result
 }
 
 function* str(key, holder, ctrl) {
