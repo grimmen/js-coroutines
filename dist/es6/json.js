@@ -7,7 +7,6 @@
 
 var gap;
 var indent;
-var meta;
 
 var yieldCount = 0;
 function yielder() {
@@ -132,16 +131,6 @@ function* str(key, holder, ctrl) {
 
 // If the JSON object does not yet have a stringify method, give it one.
 
-meta = {
-  // table of character substitutions
-  "\b": "\\b",
-  "\t": "\\t",
-  "\n": "\\n",
-  "\f": "\\f",
-  "\r": "\\r",
-  '"': '\\"',
-  "\\": "\\\\",
-};
 export function* stringify(value, replacer) {
   // The stringify method takes a value and an optional replacer, and an optional
   // space parameter, and returns a JSON text. The replacer can be a function
