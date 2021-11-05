@@ -13,6 +13,10 @@ describe('JSON tests', function () {
         let nativeJSON = JSON.stringify({emoString})
         json.should.eq(nativeJSON)
     })
+    it("should verify that undefined values drops the key", async function () {
+        let json = await stringifyAsync({a: 1, c: 2, d: undefined})
+        json.should.eq('{"a":1,"c":2}')
+    })
     it("should stringify JSON", async function () {
         let json = await stringifyAsync({a: 1, c: 2, d: 3})
         json.should.eq('{"a":1,"c":2,"d":3}')

@@ -63,6 +63,7 @@ function* str(key, holder, ctrl) {
 
       return isFinite(value) ? String(value) : "null";
 
+
     case "boolean":
     case "null":
       // If the value is a boolean or null, convert it to a string. Note:
@@ -78,6 +79,9 @@ function* str(key, holder, ctrl) {
       // Due to a specification blunder in ECMAScript, typeof null is "object",
       // so watch out for that case.
 
+      // Undefined values should be dropped (with their keys) from the stringified result
+      if(typeof(value)==="undefined") return undefined;
+      
       if (!value) {
         return "null";
       }
@@ -107,12 +111,12 @@ function* str(key, holder, ctrl) {
       // If the replacer is an array, use it to select the members to be stringified.
 
         // Otherwise, iterate through all of the keys in the object.
-        for (k in value) {
+        for (k in value) {          
           if (Object.prototype.hasOwnProperty.call(value, k)) {
-            v = yield* str(k, value, ctrl);
-            if (v) {
-              partial.push((yield* quote(k)) + (gap ? ": " : ":") + v);
-            }
+              v = yield* str(k, value, ctrl);
+              if (v) {
+                partial.push((yield* quote(k)) + (gap ? ": " : ":") + v);
+              }
           }
         }
 
