@@ -18,9 +18,10 @@ function yielder() {
   return false;
 }
 
+var quoteCounter = 0
 function* quote(string) {
   let result = JSON.stringify(string);
-  if(yielder()) yield;
+  if((++quoteCounter & 8) && yielder()) yield;
   return result
 }
 
