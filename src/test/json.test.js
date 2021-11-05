@@ -1,11 +1,18 @@
 import {parseAsync, stringifyAsync} from '../component'
 import test from '../component/yastjson/test/test.json'
-const testJSON = JSON.stringify(test)
 import {should} from 'chai'
+
+const testJSON = JSON.stringify(test)
 
 should()
 
 describe('JSON tests', function () {
+    it("should stringify JSON with emojis in it", async function () {
+        const emoString = "This 👩🏼‍🎓 Student"
+        let json = await stringifyAsync({emoString})
+        let nativeJSON = JSON.stringify({emoString})
+        json.should.eq(nativeJSON)
+    })
     it("should stringify JSON", async function () {
         let json = await stringifyAsync({a: 1, c: 2, d: 3})
         json.should.eq('{"a":1,"c":2,"d":3}')
